@@ -8,7 +8,7 @@ using namespace std;
 long long gcd(long long a,long long b){
 	return b!=0?gcd(b,a%b):a;
 }
-
+//∑¿÷π“Á≥ˆ π”√long long
 long long getInt(string &s,vector<long long> &nums)
 {
     istringstream iss(s);
