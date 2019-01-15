@@ -12,8 +12,12 @@ struct bigInt{
 		this->size=0;
 	}
 	
+	//all nums should be initlizatioon to a centain value
 	void set(string &s){
 		int size=s.length();
+		for(int i=1000;i>=size;i--){
+			a[i]=0;
+		}
 		for(int i=0;i<size;i++){
 			a[size-i]=s[i]-'0';
 		}
@@ -62,6 +66,8 @@ int main(){
 		num3=num1+num2;
 		num3.output(s1,s2,i);
 		if(i!=num)cout<<"\n\n";
+		else
+			cout<<"\n";
 	}
 	
 }
