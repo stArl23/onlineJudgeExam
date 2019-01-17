@@ -1,76 +1,85 @@
 #include<iostream>
+#include<queue>
 #include<algorithm>
 #include<vector>
+#include<string>
 using namespace std;
 
-class greater_class{
-public:
-    bool operator()(int a, int b)
-    {
-        return a > b;
-    }
+struct Node {
+	int value;
+	Node* parent;
 };
 
-int pop(vector<int> &heap){
-	int result=heap.front();
-	pop_heap(heap.begin(),heap.end(),greater_class());
-	heap.erase(heap.begin(),heap.begin()+1);
-	return result;
+
+Node* create(int value,Node* parent) {
+	Node* node=new Node;
+	node->value=value;
+	node->parent=parent;
+	return node;
 }
 
-void push(vector<int> &heap,int value){
-	heap.push_back(value);
-	push_heap(heap.begin(),heap.end(),greater_class());
-}
+class greater_class {
+	public:
+		bool operator()(Node* a, Node* b) {
+			return a->value > b->value;
+		}
+};
 
 
-int parents[1001];
 
-//考虑采用链式结构替代 
-//unpass 
-int main(){
-	for(int i=0;i<1001;i++)
-		parents[i]=0;
-		
-	
+//考虑采用链式结构替代
+//unpass
+int main() {
 	int num,temp;
-	vector<int> heap(0);
-	
+	priority_queue<Node*,vector<Node*>,greater_class> heap;
+	vector<Node*> temp1;
 	cin>>num;
-	while(num--){
-	//	cin.ignore('\n');
+	while(num--) {
+		//cin.ignore('\n');
 		cin>>temp;
 		//cout<<temp<<endl;
-		heap.push_back(temp);
+		Node* node=create(temp,NULL);
+		heap.push(node);
+		temp1.push_back(node);
 	}
-	//获得所有节点的集合 
-	vector<int> temp1(heap.begin(),heap.end());
-	make_heap(heap.begin(),heap.end(),greater_class());
-	
-	int parent=heap[0]; 
-	while(heap.size()>1){
-		int n1=pop(heap),n2=pop(heap);
-		parent=n1+n2;
-		//设置parent域 
-		parents[n1]=parents[n2]=parent;
-		//入堆 
-		push(heap,parent); 
+	//获得所有节点的集合
+
+	//make_heap(heap.begin(),heap.end(),greater_class());
+
+
+	int parent=-1;
+	while(heap.size()>1) {
+		Node* n1= heap.top();
+		heap.pop();
+		Node* n2= heap.top();
+		heap.pop();
+		parent=n1->value+n2->value;
+		//设置parent域
+		Node* parentNode=create(parent,NULL);
+		n1->parent=parentNode;
+		n2->parent=parentNode;
+		//cout<<n1->value<<" "<<n2->value<<" parent "<<parentNode->value<<endl;
+		//入堆
+		//push(heap,parentNode);
+		heap.push(parentNode);
 	}
-	
-	parents[parent]=-1;
+
+
 	//cout<<parent<<endl;
 	int result=0;
-	for(int i=0;i<temp1.size();i++){
-		int line=0,weight=temp1[i];
+	for(int i=0; i<temp1.size(); i++) {
+		int line=0;
+		Node* node1=temp1[i];
+		Node* node=temp1[i];
 		//cout<<node<<endl;
-		while(parents[weight]!=-1){
+		while(node->parent!=NULL) {
 			line++;
-			weight=parents[weight];
-			
+			node=node->parent;
+
 		}
-		//cout<<line<<" "<<node<<endl; 
-		result+=weight*line;
+		//cout<<line<<" "<<node1->value<<endl;
+		result+=node1->value*line;
 	}
-	
-	cout<<result<<endl; 
+
+	cout<<result<<endl;
 }
