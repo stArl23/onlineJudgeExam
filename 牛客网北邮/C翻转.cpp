@@ -14,6 +14,7 @@ int main(){
 	cin>>ox>>oy>>x>>y;
 	
 	if(ox==1&&oy==2){
+		//逆时针翻转90度 
 		int temp[2][2];
 		for(int i=0;i<2;i++){
 			for(int j=0;j<2;j++){
@@ -51,6 +52,7 @@ int main(){
 			}
 		}
 		
+		//顺时针翻转90度 
 		for(int i=0;i<2;i++){
 			for(int j=0;j<2;j++){
 				a[x+i-1][y+j-1]=temp[j][1-i];
