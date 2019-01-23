@@ -4,7 +4,7 @@
 #define MAX_KIND 21
 #define MAX_WEIGHT 101
 using namespace std;
-//±³°üÎÊÌâ
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 struct Item {
 	int weight;
@@ -53,7 +53,7 @@ int main() {
 			}
 		}
 		
-		Item item=items[items.size()-1];
+		//Item item=items[items.size()-1];
 		for(int i=1;i<=items.size();i++){
 			for(int j=1;j<=total;j++){
 				for(int k=0;k<=items[i-1].num;k++){
